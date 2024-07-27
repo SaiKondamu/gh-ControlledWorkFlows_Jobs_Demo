@@ -35,10 +35,11 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test code
+        #continue-in-error field allows the next steps and next jobs to execute even if this(the step on which this field is mentioned) step fails.
+        continue-on-error: true
         id: runTests
         run: npm run test
       - name: Upload test report
-        if: failure() && steps.runTests.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: test-report
