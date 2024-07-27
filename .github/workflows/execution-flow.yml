@@ -79,7 +79,9 @@ jobs:
       - name: Deploy
         run: echo "Deploying..."
   report:
-    if: failure()
+    needs: [lint, deploy]
+    #failure() returns true only if any other job fails
+    if: failure() 
     runs-on: ubuntu-latest
     steps:
       - name: Output Information
